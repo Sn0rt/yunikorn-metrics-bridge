@@ -1,0 +1,42 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: yunikorn-metrics-bridge
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: yunikorn-metrics-bridge
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-json-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  endpoints:
+    - port: http
+      path: /probe
+      interval: 30s
+      scrapeTimeout: 10s
+      params:
+        module:
+          - yunikorn_active_apps
+        target:
+          - http://yunikorn-service.yunikorn.svc.cluster.local:9080/ws/v1/partition/default/applications/active
+    - port: http
+      path: /probe
+      interval: 30s
+      scrapeTimeout: 10s
+      params:
+        module:
+          - yunikorn_partitions
+        target:
+          - http://yunikorn-service.yunikorn.svc.cluster.local:9080/ws/v1/partitions
+    - port: http
+      path: /probe
+      interval: 30s
+      scrapeTimeout: 10s
+      params:
+        module:
+          - yunikorn_completed_apps
+        target:
+          - http://yunikorn-service.yunikorn.svc.cluster.local:9080/ws/v1/partition/default/applications/completed

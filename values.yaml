@@ -1,0 +1,505 @@
+configuration:
+  config: |
+    modules:
+      yunikorn_active_apps:
+        metrics:
+          - name: yunikorn_app_info
+            type: object
+            help: "YuniKorn active application info"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: 1
+
+          - name: yunikorn_app_used_memory_bytes
+            type: object
+            help: "YuniKorn active application used memory in bytes"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.usedResource.memory}'
+
+          - name: yunikorn_app_used_cpu_millicores
+            type: object
+            help: "YuniKorn active application used CPU in millicores"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.usedResource.vcore}'
+
+          - name: yunikorn_app_used_pods
+            type: object
+            help: "YuniKorn active application used pods"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.usedResource.pods}'
+
+          - name: yunikorn_app_max_used_memory_bytes
+            type: object
+            help: "YuniKorn active application max used memory in bytes"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.maxUsedResource.memory}'
+
+          - name: yunikorn_app_max_used_cpu_millicores
+            type: object
+            help: "YuniKorn active application max used CPU in millicores"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.maxUsedResource.vcore}'
+
+          - name: yunikorn_app_max_used_pods
+            type: object
+            help: "YuniKorn active application max used pods"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.maxUsedResource.pods}'
+
+          - name: yunikorn_app_submission_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn active application submission timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.submissionTime}'
+
+          - name: yunikorn_app_start_timestamp_milliseconds
+            type: object
+            help: "YuniKorn active application start timestamp in milliseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.startTime}'
+
+          - name: yunikorn_app_accepted_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn active application accepted timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.stateLog[0].time}'
+
+          - name: yunikorn_app_running_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn active application running timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.stateLog[1].time}'
+
+          - name: yunikorn_app_allocation_request_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn active application first allocation request timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.allocations[0].requestTime}'
+
+          - name: yunikorn_app_first_allocation_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn active application first allocation timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.allocations[0].allocationTime}'
+
+          - name: yunikorn_app_primary_allocation_memory_bytes
+            type: object
+            help: "YuniKorn active application primary allocation memory in bytes"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.allocations[0].resource.memory}'
+
+          - name: yunikorn_app_primary_allocation_cpu_millicores
+            type: object
+            help: "YuniKorn active application primary allocation CPU in millicores"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.allocations[0].resource.vcore}'
+
+          - name: yunikorn_app_primary_allocation_pods
+            type: object
+            help: "YuniKorn active application primary allocation pods"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
+              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
+            values:
+              value: '{.allocations[0].resource.pods}'
+
+      yunikorn_partitions:
+        metrics:
+          - name: yunikorn_partition_info
+            type: object
+            help: "YuniKorn partition info"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+              cluster_id: '{.clusterId}'
+              state: '{.state}'
+              node_sorting_policy: '{.nodeSortingPolicy.type}'
+            values:
+              value: 1
+
+          - name: yunikorn_partition_preemption_enabled
+            type: object
+            help: "YuniKorn partition preemption enabled"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.preemptionEnabled}'
+
+          - name: yunikorn_partition_quota_preemption_enabled
+            type: object
+            help: "YuniKorn partition quota preemption enabled"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.quotaPreemptionEnabled}'
+
+          - name: yunikorn_partition_total_nodes
+            type: object
+            help: "YuniKorn partition total nodes"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.totalNodes}'
+
+          - name: yunikorn_partition_total_containers
+            type: object
+            help: "YuniKorn partition total containers"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.totalContainers}'
+
+          - name: yunikorn_partition_applications
+            type: object
+            help: "YuniKorn partition applications by state"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+              application_state: total
+            values:
+              value: '{.applications.total}'
+
+          - name: yunikorn_partition_applications
+            type: object
+            help: "YuniKorn partition applications by state"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+              application_state: Running
+            values:
+              value: '{.applications.Running}'
+
+          - name: yunikorn_partition_capacity_memory_bytes
+            type: object
+            help: "YuniKorn partition capacity memory in bytes"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.capacity.memory}'
+
+          - name: yunikorn_partition_capacity_cpu_millicores
+            type: object
+            help: "YuniKorn partition capacity CPU in millicores"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.capacity.vcore}'
+
+          - name: yunikorn_partition_capacity_pods
+            type: object
+            help: "YuniKorn partition capacity pods"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.capacity.pods}'
+
+          - name: yunikorn_partition_capacity_ephemeral_storage_bytes
+            type: object
+            help: "YuniKorn partition capacity ephemeral storage in bytes"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.capacity.ephemeral-storage}'
+
+          - name: yunikorn_partition_used_memory_bytes
+            type: object
+            help: "YuniKorn partition used memory in bytes"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.usedCapacity.memory}'
+
+          - name: yunikorn_partition_used_cpu_millicores
+            type: object
+            help: "YuniKorn partition used CPU in millicores"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.usedCapacity.vcore}'
+
+          - name: yunikorn_partition_used_pods
+            type: object
+            help: "YuniKorn partition used pods"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.usedCapacity.pods}'
+
+          - name: yunikorn_partition_utilization_memory_percent
+            type: object
+            help: "YuniKorn partition memory utilization percent"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.utilization.memory}'
+
+          - name: yunikorn_partition_utilization_cpu_percent
+            type: object
+            help: "YuniKorn partition CPU utilization percent"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.utilization.vcore}'
+
+          - name: yunikorn_partition_utilization_pods_percent
+            type: object
+            help: "YuniKorn partition pods utilization percent"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.capacity.utilization.pods}'
+
+          - name: yunikorn_partition_last_state_transition_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn partition last state transition timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              partition: '{.name}'
+            values:
+              value: '{.lastStateTransitionTime}'
+
+      yunikorn_completed_apps:
+        metrics:
+          - name: yunikorn_completed_app_info
+            type: object
+            help: "YuniKorn completed application info"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+              application_state: '{.applicationState}'
+            values:
+              value: 1
+
+          - name: yunikorn_completed_app_max_used_memory_bytes
+            type: object
+            help: "YuniKorn completed application max used memory in bytes"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.maxUsedResource.memory}'
+
+          - name: yunikorn_completed_app_max_used_cpu_millicores
+            type: object
+            help: "YuniKorn completed application max used CPU in millicores"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.maxUsedResource.vcore}'
+
+          - name: yunikorn_completed_app_max_used_pods
+            type: object
+            help: "YuniKorn completed application max used pods"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.maxUsedResource.pods}'
+
+          - name: yunikorn_completed_app_submission_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application submission timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.submissionTime}'
+
+          - name: yunikorn_completed_app_accepted_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application accepted timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.stateLog[0].time}'
+
+          - name: yunikorn_completed_app_running_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application running timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.stateLog[1].time}'
+
+          - name: yunikorn_completed_app_completing_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application completing timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.stateLog[2].time}'
+
+          - name: yunikorn_completed_app_start_timestamp_milliseconds
+            type: object
+            help: "YuniKorn completed application start timestamp in milliseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.startTime}'
+
+          - name: yunikorn_completed_app_finished_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application finished timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.finishedTime}'
+
+          - name: yunikorn_completed_app_completed_timestamp_nanoseconds
+            type: object
+            help: "YuniKorn completed application completed timestamp in nanoseconds"
+            path: '{[*]}'
+            labels:
+              application_id: '{.applicationID}'
+              partition: '{.partition}'
+              queue: '{.queueName}'
+            values:
+              value: '{.stateLog[3].time}'
