@@ -11,34 +11,28 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: 1
 
           - name: yunikorn_app_used_memory_bytes
             type: object
             help: "YuniKorn active application used memory in bytes"
-            path: '{[*]}'
+            path: '{[?(@.usedResource.memory)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.usedResource.memory}'
 
           - name: yunikorn_app_used_cpu_millicores
             type: object
             help: "YuniKorn active application used CPU in millicores"
-            path: '{[*]}'
+            path: '{[?(@.usedResource.vcore)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.usedResource.vcore}'
 
@@ -50,34 +44,28 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.usedResource.pods}'
 
           - name: yunikorn_app_max_used_memory_bytes
             type: object
             help: "YuniKorn active application max used memory in bytes"
-            path: '{[*]}'
+            path: '{[?(@.maxUsedResource.memory)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.maxUsedResource.memory}'
 
           - name: yunikorn_app_max_used_cpu_millicores
             type: object
             help: "YuniKorn active application max used CPU in millicores"
-            path: '{[*]}'
+            path: '{[?(@.maxUsedResource.vcore)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.maxUsedResource.vcore}'
 
@@ -89,8 +77,6 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.maxUsedResource.pods}'
 
@@ -102,8 +88,6 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.submissionTime}'
 
@@ -115,8 +99,6 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.startTime}'
 
@@ -128,8 +110,6 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.stateLog[0].time}'
 
@@ -141,15 +121,13 @@ configuration:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
-              namespace: '{.allocations[0].allocationTags.kubernetes\.io/meta/namespace}'
-              pod_name: '{.allocations[0].allocationTags.kubernetes\.io/meta/podName}'
             values:
               value: '{.stateLog[1].time}'
 
           - name: yunikorn_app_allocation_request_timestamp_nanoseconds
             type: object
             help: "YuniKorn active application first allocation request timestamp in nanoseconds"
-            path: '{[*]}'
+            path: '{[?(@.allocations[0].requestTime)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -162,7 +140,7 @@ configuration:
           - name: yunikorn_app_first_allocation_timestamp_nanoseconds
             type: object
             help: "YuniKorn active application first allocation timestamp in nanoseconds"
-            path: '{[*]}'
+            path: '{[?(@.allocations[0].allocationTime)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -175,7 +153,7 @@ configuration:
           - name: yunikorn_app_primary_allocation_memory_bytes
             type: object
             help: "YuniKorn active application primary allocation memory in bytes"
-            path: '{[*]}'
+            path: '{[?(@.allocations[0].resource.memory)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -188,7 +166,7 @@ configuration:
           - name: yunikorn_app_primary_allocation_cpu_millicores
             type: object
             help: "YuniKorn active application primary allocation CPU in millicores"
-            path: '{[*]}'
+            path: '{[?(@.allocations[0].resource.vcore)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -201,7 +179,7 @@ configuration:
           - name: yunikorn_app_primary_allocation_pods
             type: object
             help: "YuniKorn active application primary allocation pods"
-            path: '{[*]}'
+            path: '{[?(@.allocations[0].resource.pods)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -380,6 +358,270 @@ configuration:
             values:
               value: '{.lastStateTransitionTime}'
 
+      yunikorn_queues:
+        metrics:
+          - name: yunikorn_queue_info
+            type: object
+            help: "YuniKorn queue info"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+              status: '{.status}'
+              sorting_policy: '{.sortingPolicy}'
+              preemption_delay: '{.preemptionDelay}'
+              quota_preemption_delay: '{.quotaPreemptionDelay}'
+              is_leaf: '{.isLeaf}'
+              is_managed: '{.isManaged}'
+              priority_sorting: '{.prioritySorting}'
+              is_preemption_fence: '{.isPreemptionFence}'
+              is_priority_fence: '{.isPriorityFence}'
+            values:
+              value: 1
+
+          - name: yunikorn_queue_running_apps
+            type: object
+            help: "YuniKorn queue running applications"
+            path: '{..children[?(@.runningApps)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.runningApps}'
+
+          - name: yunikorn_queue_allocated_memory_bytes
+            type: object
+            help: "YuniKorn queue allocated memory in bytes"
+            path: '{..children[?(@.allocatedResource.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.allocatedResource.memory}'
+
+          - name: yunikorn_queue_allocated_cpu_millicores
+            type: object
+            help: "YuniKorn queue allocated CPU in millicores"
+            path: '{..children[?(@.allocatedResource.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.allocatedResource.vcore}'
+
+          - name: yunikorn_queue_allocated_pods
+            type: object
+            help: "YuniKorn queue allocated pods"
+            path: '{..children[?(@.allocatedResource.pods)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.allocatedResource.pods}'
+
+          - name: yunikorn_queue_pending_memory_bytes
+            type: object
+            help: "YuniKorn queue pending memory in bytes"
+            path: '{..children[?(@.pendingResource.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.pendingResource.memory}'
+
+          - name: yunikorn_queue_pending_cpu_millicores
+            type: object
+            help: "YuniKorn queue pending CPU in millicores"
+            path: '{..children[?(@.pendingResource.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.pendingResource.vcore}'
+
+          - name: yunikorn_queue_pending_pods
+            type: object
+            help: "YuniKorn queue pending pods"
+            path: '{..children[?(@.pendingResource.pods)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.pendingResource.pods}'
+
+          - name: yunikorn_queue_guaranteed_memory_bytes
+            type: object
+            help: "YuniKorn queue guaranteed memory in bytes"
+            path: '{..children[?(@.guaranteedResource.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.guaranteedResource.memory}'
+
+          - name: yunikorn_queue_guaranteed_cpu_millicores
+            type: object
+            help: "YuniKorn queue guaranteed CPU in millicores"
+            path: '{..children[?(@.guaranteedResource.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.guaranteedResource.vcore}'
+
+          - name: yunikorn_queue_max_memory_bytes
+            type: object
+            help: "YuniKorn queue max memory in bytes"
+            path: '{..children[?(@.maxResource.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.maxResource.memory}'
+
+          - name: yunikorn_queue_max_cpu_millicores
+            type: object
+            help: "YuniKorn queue max CPU in millicores"
+            path: '{..children[?(@.maxResource.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.maxResource.vcore}'
+
+          - name: yunikorn_queue_abs_used_capacity_memory_percent
+            type: object
+            help: "YuniKorn queue absolute used memory capacity percent"
+            path: '{..children[?(@.absUsedCapacity.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.absUsedCapacity.memory}'
+
+          - name: yunikorn_queue_abs_used_capacity_cpu_percent
+            type: object
+            help: "YuniKorn queue absolute used CPU capacity percent"
+            path: '{..children[?(@.absUsedCapacity.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.absUsedCapacity.vcore}'
+
+          - name: yunikorn_queue_headroom_memory_bytes
+            type: object
+            help: "YuniKorn queue headroom memory in bytes"
+            path: '{..children[?(@.headroom.memory)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.headroom.memory}'
+
+          - name: yunikorn_queue_headroom_cpu_millicores
+            type: object
+            help: "YuniKorn queue headroom CPU in millicores"
+            path: '{..children[?(@.headroom.vcore)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.headroom.vcore}'
+
+          - name: yunikorn_queue_preemption_enabled
+            type: object
+            help: "YuniKorn queue preemption enabled"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.preemptionEnabled}'
+
+          - name: yunikorn_queue_current_priority
+            type: object
+            help: "YuniKorn queue current priority"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.currentPriority}'
+
+          - name: yunikorn_queue_priority_sorting_enabled
+            type: object
+            help: "YuniKorn queue priority sorting enabled"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.prioritySorting}'
+
+          - name: yunikorn_queue_is_leaf
+            type: object
+            help: "YuniKorn queue is leaf"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.isLeaf}'
+
+          - name: yunikorn_queue_is_managed
+            type: object
+            help: "YuniKorn queue is managed"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.isManaged}'
+
+          - name: yunikorn_queue_is_preemption_fence
+            type: object
+            help: "YuniKorn queue is preemption fence"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.isPreemptionFence}'
+
+          - name: yunikorn_queue_is_priority_fence
+            type: object
+            help: "YuniKorn queue is priority fence"
+            path: '{..children[?(@.queuename)]}'
+            labels:
+              queue: '{.queuename}'
+              parent: '{.parent}'
+              partition: default
+            values:
+              value: '{.isPriorityFence}'
+
       yunikorn_completed_apps:
         metrics:
           - name: yunikorn_completed_app_info
@@ -397,7 +639,7 @@ configuration:
           - name: yunikorn_completed_app_max_used_memory_bytes
             type: object
             help: "YuniKorn completed application max used memory in bytes"
-            path: '{[*]}'
+            path: '{[?(@.maxUsedResource.memory)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
@@ -408,7 +650,7 @@ configuration:
           - name: yunikorn_completed_app_max_used_cpu_millicores
             type: object
             help: "YuniKorn completed application max used CPU in millicores"
-            path: '{[*]}'
+            path: '{[?(@.maxUsedResource.vcore)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'

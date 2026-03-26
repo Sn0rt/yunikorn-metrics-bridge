@@ -1,0 +1,49 @@
+yunikornDefaults:
+  queues.yaml: |
+    partitions:
+      - name: default
+        placementrules:
+          - name: provided
+            create: false
+          - name: fixed
+            value: root.default
+        queues:
+          - name: root
+            submitacl: "*"
+            queues:
+              - name: default
+                submitacl: "*"
+                resources:
+                  guaranteed:
+                    memory: 1Gi
+                    vcore: 1000m
+                  max:
+                    memory: 8Gi
+                    vcore: 4000m
+              - name: analytics
+                submitacl: "*"
+                resources:
+                  guaranteed:
+                    memory: 2Gi
+                    vcore: 1000m
+                  max:
+                    memory: 8Gi
+                    vcore: 4000m
+              - name: batch
+                submitacl: "*"
+                resources:
+                  guaranteed:
+                    memory: 1Gi
+                    vcore: 1000m
+                  max:
+                    memory: 8Gi
+                    vcore: 4000m
+              - name: pending
+                submitacl: "*"
+                resources:
+                  guaranteed:
+                    memory: 512Mi
+                    vcore: 500m
+                  max:
+                    memory: 4Gi
+                    vcore: 2000m

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yk-demo-active
+  namespace: default
+  labels:
+    applicationId: app-demo-active-001
+    queue: root.default
+    yunikorn.apache.org/app-id: app-demo-active-001
+  annotations:
+    yunikorn.apache.org/app-id: app-demo-active-001
+    yunikorn.apache.org/queue: root.default
+spec:
+  schedulerName: yunikorn
+  restartPolicy: Never
+  containers:
+    - name: sleep
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 3600"]
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "128Mi"
+        limits:
+          cpu: "250m"
+          memory: "128Mi"

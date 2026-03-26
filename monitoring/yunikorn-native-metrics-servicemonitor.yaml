@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: yunikorn-native-metrics
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: yunikorn-native-metrics
+    release: kube-prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+      - yunikorn
+  selector:
+    matchLabels:
+      app: yunikorn
+      release: yunikorn
+  endpoints:
+    - port: yunikorn-core
+      path: /ws/v1/metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      relabelings:
+        - action: keep
+          sourceLabels:
+            - __meta_kubernetes_service_name
+          regex: yunikorn-service
+        - action: keep
+          sourceLabels:
+            - __meta_kubernetes_endpoint_port_name
+          regex: yunikorn-core

@@ -37,6 +37,15 @@ spec:
       scrapeTimeout: 10s
       params:
         module:
+          - yunikorn_queues
+        target:
+          - http://yunikorn-service.yunikorn.svc.cluster.local:9080/ws/v1/partition/default/queues
+    - port: http
+      path: /probe
+      interval: 30s
+      scrapeTimeout: 10s
+      params:
+        module:
           - yunikorn_completed_apps
         target:
           - http://yunikorn-service.yunikorn.svc.cluster.local:9080/ws/v1/partition/default/applications/completed
