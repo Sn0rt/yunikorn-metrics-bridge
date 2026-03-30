@@ -31,6 +31,24 @@ Important conventions:
   - some timestamps are nanoseconds
   - some timestamps are milliseconds
 
+## Inventory Summary
+
+This document currently covers `67` unique emitted metric families.
+
+That count matches the configured family inventory in `monitoring/json-exporter-values.yaml` at metric-family level after applying the JSON exporter's `_value` naming convention.
+
+Current family counts by group:
+
+- Active application metrics: `16`
+- Completed application metrics: `11`
+- Partition metrics: `17`
+- Queue metrics: `23`
+
+Important counting rule:
+
+- repeated YAML stanzas for the same configured metric name still count as one metric family in this document
+- for example, `yunikorn_partition_applications` is configured in multiple stanzas but emitted and documented as one family, `yunikorn_partition_applications_value`, with multiple label values
+
 ## Application Inventory And Usage
 
 `yunikorn_app_info_value`

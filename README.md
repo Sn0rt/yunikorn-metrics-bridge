@@ -115,6 +115,8 @@ Each Grafana dashboard JSON is a source of truth and is imported by `setup.sh` v
 - `yunikorn_queues`
 - `yunikorn_completed_apps`
 
+The scheduling analytics dashboard presents completed application scheduling wait as a summary plus a trend-oriented chart, instead of using a table as the primary visualization.
+
 `monitoring/grafana-scheduler-health-dashboard.json` covers:
 
 - `yunikorn_queue_app`
