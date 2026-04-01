@@ -18,6 +18,10 @@ It also does not cover native YuniKorn metrics such as:
 - `yunikorn_scheduler_*`
 - `yunikorn_runtime_go_*`
 
+It also does not define future lifecycle metric semantics such as end-to-end wall-clock duration or repeated-state transition counts. Those reviewer-facing lifecycle definitions are documented separately in [LIFECYCLE_METRIC_DESIGN.md](/Users/guohao/workspace/yunikorn-metrics-bridge/docs/LIFECYCLE_METRIC_DESIGN.md).
+
+Reviewer-facing lifecycle durations in this repo are currently expressed at the Grafana/PromQL layer using raw timestamp metrics emitted by the JSON exporter. They are intentionally not counted as additional JSON-exporter metric families in this document.
+
 Important conventions:
 
 - The Prometheus JSON exporter appends `_value` to scalar metric names.
@@ -30,6 +34,13 @@ Important conventions:
 - Time units are mixed because the YuniKorn REST API is mixed.
   - some timestamps are nanoseconds
   - some timestamps are milliseconds
+
+`stateLog` semantics:
+
+- `stateLog` is an ordered list of observed application state transitions emitted by YuniKorn
+- each entry carries its own `applicationState` and `time`
+- the list is append-only history, not a fixed positional schema such as `[accepted, running, completing, completed]`
+- when a dedicated field such as `startTime` or `finishedTime` exists, it is usually a more robust source for dashboard calculations than assuming a specific `stateLog` index
 
 ## Inventory Summary
 
@@ -178,6 +189,9 @@ Important counting rule:
   - `application_id`
   - `partition`
   - `queue`
+- Limitation:
+  - this metric is derived from the completed application's lifecycle log rather than the dedicated `startTime` field
+  - it can be less robust than `yunikorn_completed_app_start_timestamp_milliseconds_value` when lifecycle log shape varies
 
 `yunikorn_completed_app_completing_timestamp_nanoseconds_value`
 
@@ -214,6 +228,9 @@ Important counting rule:
   - `application_id`
   - `partition`
   - `queue`
+- Limitation:
+  - this metric is derived from the completed application's lifecycle log rather than the dedicated `finishedTime` field
+  - dashboards that need robust completion timing may prefer `yunikorn_completed_app_finished_timestamp_nanoseconds_value`
 
 ## Allocation-Level Application View
 

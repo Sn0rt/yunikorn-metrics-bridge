@@ -111,18 +111,18 @@ configuration:
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[0].time}'
+              value: '{.stateLog[?(@.applicationState=="Accepted")].time}'
 
           - name: yunikorn_app_running_timestamp_nanoseconds
             type: object
             help: "YuniKorn active application running timestamp in nanoseconds"
-            path: '{[*]}'
+            path: '{[?(@.applicationState=="Running")]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[1].time}'
+              value: '{.stateLog[?(@.applicationState=="Running")].time}'
 
           - name: yunikorn_app_allocation_request_timestamp_nanoseconds
             type: object
@@ -689,18 +689,18 @@ configuration:
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[0].time}'
+              value: '{.stateLog[?(@.applicationState=="Accepted")].time}'
 
           - name: yunikorn_completed_app_running_timestamp_nanoseconds
             type: object
             help: "YuniKorn completed application running timestamp in nanoseconds"
-            path: '{[*]}'
+            path: '{[?(@.startTime)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[1].time}'
+              value: '{.stateLog[?(@.applicationState=="Running")].time}'
 
           - name: yunikorn_completed_app_completing_timestamp_nanoseconds
             type: object
@@ -711,7 +711,7 @@ configuration:
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[2].time}'
+              value: '{.stateLog[?(@.applicationState=="Completing")].time}'
 
           - name: yunikorn_completed_app_start_timestamp_milliseconds
             type: object
@@ -738,10 +738,10 @@ configuration:
           - name: yunikorn_completed_app_completed_timestamp_nanoseconds
             type: object
             help: "YuniKorn completed application completed timestamp in nanoseconds"
-            path: '{[*]}'
+            path: '{[?(@.finishedTime)]}'
             labels:
               application_id: '{.applicationID}'
               partition: '{.partition}'
               queue: '{.queueName}'
             values:
-              value: '{.stateLog[3].time}'
+              value: '{.stateLog[?(@.applicationState=="Completed")].time}'
