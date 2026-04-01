@@ -51,7 +51,6 @@ The default setup also creates test queues and workloads:
 .
 ├── docs/
 │   ├── JSON_EXPORTER_METRICS.md
-│   ├── LIFECYCLE_METRIC_DESIGN.md
 │   └── YARN_TO_YUNIKORN_METRIC_MAPPING.md
 ├── examples/
 │   ├── active-pod.yaml
@@ -106,8 +105,6 @@ kubectl apply --dry-run=client -f monitoring/json-exporter-servicemonitor.yaml
 - `yunikorn_scheduler_*`
 - `yunikorn_runtime_go_*`
 
-Completed lifecycle durations in the scheduling analytics dashboard are currently expressed in Grafana/PromQL using the raw timestamp metrics emitted by the JSON exporter.
-
 ## Grafana
 
 Each Grafana dashboard JSON is a source of truth and is imported by `setup.sh` via a generated ConfigMap.
@@ -135,5 +132,3 @@ Import either dashboard and select your Prometheus datasource when prompted. The
 For YARN-to-YuniKorn bean coverage and PromQL mapping, see [YARN_TO_YUNIKORN_METRIC_MAPPING.md](/Users/guohao/workspace/yunikorn-metrics-bridge/docs/YARN_TO_YUNIKORN_METRIC_MAPPING.md).
 
 For the JSON-exporter bridge metric reference, see [JSON_EXPORTER_METRICS.md](/Users/guohao/workspace/yunikorn-metrics-bridge/docs/JSON_EXPORTER_METRICS.md).
-
-For lifecycle metric semantics based on YuniKorn `stateLog`, see [LIFECYCLE_METRIC_DESIGN.md](/Users/guohao/workspace/yunikorn-metrics-bridge/docs/LIFECYCLE_METRIC_DESIGN.md).

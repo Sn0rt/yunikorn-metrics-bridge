@@ -18,10 +18,6 @@ It also does not cover native YuniKorn metrics such as:
 - `yunikorn_scheduler_*`
 - `yunikorn_runtime_go_*`
 
-It also does not define future lifecycle metric semantics such as end-to-end wall-clock duration or repeated-state transition counts. Those reviewer-facing lifecycle definitions are documented separately in [LIFECYCLE_METRIC_DESIGN.md](/Users/guohao/workspace/yunikorn-metrics-bridge/docs/LIFECYCLE_METRIC_DESIGN.md).
-
-Reviewer-facing lifecycle durations in this repo are currently expressed at the Grafana/PromQL layer using raw timestamp metrics emitted by the JSON exporter. They are intentionally not counted as additional JSON-exporter metric families in this document.
-
 Important conventions:
 
 - The Prometheus JSON exporter appends `_value` to scalar metric names.
